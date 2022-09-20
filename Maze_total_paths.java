@@ -3,6 +3,7 @@ public class Maze_total_paths {
 	
 	public static int count_paths(int i,int j,int n,int m)
 	{
+		//time complexity=O(2^n^2)
 		//base case
 		if(i==n || j==m )
 		{
