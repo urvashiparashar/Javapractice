@@ -134,6 +134,95 @@ public class Binary_treeimple {
 		
 		
 	}
+	
+	public static int countnodes(Node root)
+	{
+		if(root==null)
+		{
+			return 0;
+		}
+		int leftnodes=countnodes(root.left);
+		int rightnodes=countnodes(root.right);
+		
+		//formula for countinh number of nodes
+		return leftnodes+rightnodes+1;
+	}
+	
+	public static int sumofnodes(Node root)
+	{
+		if(root==null)
+		{
+			return 0;
+		}
+		int leftsum=sumofnodes(root.left); //sum of left subtree
+		int rightsum=sumofnodes(root.right); //sum of right subtree
+		
+		//formula for countinh number of nodes
+		return leftsum+rightsum+root.data;
+	}
+	
+	//height can be calculated using deepest leaf location
+	public static int height(Node root)
+	{
+		if(root==null)
+		{
+			return 0;
+		}
+		int leftheight=height(root.left);
+		int rightheight=height(root.right);
+		int myheight=Math.max(leftheight,rightheight)+1;
+		
+		return myheight;
+		
+	}
+	
+	//diameter: number of nodes in longest path between two nodes
+	public static int calc_dia(Node root)
+	{
+		if(root==null)
+		{
+			return 0;
+		}
+		//time complexity: O(n^2) so not optimised
+		int dia1=calc_dia(root.left);
+		int dia2=calc_dia(root.right);
+		int dia3=height(root.left)+height(root.right)+1;
+		int dia=Math.max(dia3, Math.max(dia1, dia2));
+		
+		return dia;
+	}
+	
+	static class Treeinfo
+	{
+		int ht,diameter;
+		Treeinfo(int ht,int diameter)
+		{
+			this.ht=ht;
+			this.diameter=diameter;
+		}
+		
+	}
+	
+	public static Treeinfo diameter2(Node root)
+	{
+		if(root==null)
+		{
+			return new Treeinfo(0, 0);
+					
+		}
+		Treeinfo left=diameter2(root.left); //left subtree info
+		Treeinfo right=diameter2(root.right); //right subtree info
+		
+		int myhegight=Math.max(left.ht, right.ht)+1;
+		int diam1=left.diameter;
+		int diam2=right.diameter;
+		int diam3=left.ht+right.ht+1;
+		
+		int mydia=Math.max(Math.max(diam1, diam2),diam3);
+		
+		Treeinfo myinfo=new Treeinfo(myhegight, mydia);
+		return myinfo;
+	}
 
 
 	public static void main(String[] args) {
@@ -146,7 +235,14 @@ public class Binary_treeimple {
 //		preorder(root);
 //		inorder(root);
 //		postorder(root);
-		levelorder(root);
+//		levelorder(root);
+		
+//		System.out.println(countnodes(root));  //time complexity is O(n)
+//		System.out.println(sumofnodes(root));
+		
+//		System.out.println(height(root));
+		
+		System.out.println(diameter2(root).diameter);
 
 	}
 
